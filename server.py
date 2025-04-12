@@ -39,7 +39,7 @@ def monitor_clients():
 
 # Lancer le serveur
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('0.0.0.0', 5000))
+server.bind(('https://serverpy-jbkj.onrender.com', 5000))
 server.listen(5)
 print("Serveur en écoute sur le port 5000")
 
