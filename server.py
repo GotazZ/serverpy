@@ -7,7 +7,13 @@ clients = {}
 def handle_client(conn, addr):
     client_id = conn.recv(1024).decode()  # attend un nom/id du client
     clients[client_id] = {"addr": addr, "last_seen": time.time(), "conn": conn}
-    print(f"{client_id} connecté depuis {addr}")
+    try:
+    host_name = socket.gethostbyaddr(addr[0])[0]
+    except socket.herror:
+        host_name = addr[0]  # en cas d'échec, on garde l'IP
+
+    print(f"{client_id} connecté depuis {host_name}")
+
 
     try:
         while True:
@@ -33,7 +39,7 @@ def monitor_clients():
 
 # Lancer le serveur
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('https://serverpy-jbkj.onrender.com', 5000))
+server.bind(('0.0.0.0', 5000))
 server.listen(5)
 print("Serveur en écoute sur le port 5000")
 
