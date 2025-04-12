@@ -6,12 +6,13 @@ clients = {}
 
 def handle_client(conn, addr):
     client_id = conn.recv(1024).decode()  # attend un nom/id du client
-    clients[client_id] = {"addr": addr, "last_seen": time.time(), "conn": conn}
+    
     try:
-    host_name = socket.gethostbyaddr(addr[0])[0]
+        host_name = socket.gethostbyaddr(addr[0])[0]
     except socket.herror:
-        host_name = addr[0]  # en cas d'échec, on garde l'IP
+        host_name = addr[0]  # si la résolution échoue, on garde l'IP
 
+    clients[client_id] = {"addr": addr, "last_seen": time.time(), "conn": conn}
     print(f"{client_id} connecté depuis {host_name}")
 
 
